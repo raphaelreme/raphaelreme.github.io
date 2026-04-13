@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raphaël Rème – Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --surface: #f2f0eb;
+      --border: #dedad3;
+      --text: #1a1916;
+      --muted: #6b6860;
+      --accent: #2a5f8f;
+      --accent-light: #e8f0f7;
+      --red: #b03a2e;
+      --red-light: #fdf0ee;
+      --green: #2e6b4f;
+      --green-light: #edf5f0;
+      --font-serif: 'EB Garamond', Georgia, serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-serif);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── Layout ── */
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 0;
+    }
+    nav .wrapper { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .nav-name { font-size: 15px; font-weight: 500; color: var(--text); letter-spacing: 0.01em; }
+    .nav-links { display: flex; gap: 1.4rem; }
+    .nav-links a { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Hero ── */
+    header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--border); }
+    header .wrapper { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start; }
+    .header-text h1 { font-size: 2.4rem; font-weight: 400; line-height: 1.2; margin-bottom: 0.3rem; }
+    .header-text .subtitle { font-family: var(--font-mono); font-size: 13px; color: var(--muted); margin-bottom: 1.2rem; letter-spacing: 0.02em; }
+    .header-text .bio { color: var(--muted); font-size: 16px; max-width: 560px; margin-bottom: 1.4rem; }
+    .header-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 12px;
+      padding: 4px 12px; border: 1px solid var(--border);
+      border-radius: 2px; color: var(--muted); background: var(--surface);
+    }
+    .pill svg { width: 13px; height: 13px; flex-shrink: 0; fill: currentColor; }
+    .pill:hover { text-decoration: none; }
+    .pill-scholar  { border-color: #b3c8f8; color: #6b8ed4; background: #f2f6fe; }
+    .pill-github   { border-color: #b0b8c2; color: #5a6470; background: #f2f3f4; }
+    .pill-linkedin { border-color: #90b8e0; color: #4478aa; background: #edf4fb; }
+    .pill-email    { border-color: #e0b0ae; color: #a86260; background: #fdf2f2; }
+    .pill-cv       { border-color: #a8c4dc; color: #4878a0; background: #eef4f9; }
+    .pill-scholar:hover  { border-color: #4285f4; color: #4285f4; background: #eef3fe; }
+    .pill-github:hover   { border-color: #24292e; color: #24292e; background: #f0f0f0; }
+    .pill-linkedin:hover { border-color: #0a66c2; color: #0a66c2; background: #e8f1fb; }
+    .pill-email:hover    { border-color: #c5221f; color: #c5221f; background: #fdecea; }
+    .pill-cv:hover       { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .avatar-box {
+      width: 110px; height: 110px; border-radius: 4px;
+      border: 1px solid var(--border); flex-shrink: 0;
+      overflow: hidden;
+    }
+    .avatar-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Sections ── */
+    section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 2rem; display: block;
+    }
+
+    /* ── Publications ── */
+    .pub-group { margin-bottom: 2.5rem; }
+    .pub-group-title {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 1.2rem;
+    }
+
+    .pub {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 0.5rem 1.5rem; align-items: start;
+      padding: 1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .pub:last-child { border-bottom: none; }
+    .pub-title { font-size: 16px; font-weight: 500; line-height: 1.4; margin-bottom: 4px; }
+    .pub-authors { font-size: 14px; color: var(--muted); margin-bottom: 3px; }
+    .pub-authors em { font-style: normal; color: var(--text); font-weight: 500; }
+    .pub-venue { font-size: 14px; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+    .pub-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge {
+      font-family: var(--font-mono); font-size: 11px; padding: 2px 8px;
+      border-radius: 2px; border: 1px solid;
+    }
+    .badge-pdf { background: var(--red-light); color: var(--red); border-color: #e8b5b0; }
+    .badge-doi { background: var(--accent-light); color: var(--accent); border-color: #b5cfe8; }
+    .badge-pending { background: var(--surface); color: var(--muted); border-color: var(--border); }
+    .badge-code { background: var(--green-light); color: var(--green); border-color: #a8d5bc; }
+    .pub-year { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 2px; white-space: nowrap; }
+
+    /* ── Thesis ── */
+    .thesis-card {
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 1.5rem 2rem; background: var(--surface);
+    }
+    .thesis-card h3 { font-size: 1.1rem; font-weight: 500; line-height: 1.4; margin-bottom: 0.4rem; }
+    .thesis-meta { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 1rem; }
+    .thesis-abstract { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 1.2rem; }
+    .thesis-keywords { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 1.2rem; }
+    .thesis-keywords span { color: var(--text); }
+
+    /* ── Projects ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .proj-card {
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 1rem 1.2rem; background: var(--bg);
+      transition: border-color 0.15s;
+    }
+    .proj-card:hover { border-color: var(--accent); }
+    .proj-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .proj-card h3 a { color: var(--text); }
+    .proj-card h3 a:hover { color: var(--accent); text-decoration: none; }
+    .proj-date { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+    .proj-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+    .proj-highlight { font-size: 13px; color: var(--green); font-family: var(--font-mono); background: var(--green-light); padding: 2px 8px; border-radius: 2px; display: inline-block; }
+
+    /* ── Teaching ── */
+    .teaching-item { padding: 0.9rem 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 1rem; }
+    .teaching-item:last-child { border-bottom: none; }
+    .teaching-title { font-size: 16px; font-weight: 500; margin-bottom: 2px; }
+    .teaching-meta { font-size: 14px; color: var(--muted); }
+    .teaching-year { font-family: var(--font-mono); font-size: 13px; color: var(--muted); white-space: nowrap; padding-top: 2px; }
+
+    /* ── CV / Education ── */
+    .cv-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .cv-row:last-child { border-bottom: none; }
+    .cv-title { font-size: 16px; font-weight: 500; margin-bottom: 2px; }
+    .cv-inst { font-size: 14px; color: var(--muted); }
+    .cv-date { font-family: var(--font-mono); font-size: 13px; color: var(--muted); white-space: nowrap; padding-top: 2px; }
+    .cv-summary { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    .cv-download {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 12px;
+      padding: 7px 16px; border: 1px solid var(--border); border-radius: 2px;
+      color: var(--muted); background: var(--surface); margin-bottom: 1.5rem;
+    }
+    .cv-download:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); text-decoration: none; }
+
+    /* ── Contact ── */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+    .contact-item { }
+    .contact-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+    .contact-val { font-size: 15px; }
+
+    /* ── Footer ── */
+    footer { padding: 2rem 0; text-align: center; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+    @media (max-width: 600px) {
+      header .wrapper { grid-template-columns: 1fr; }
+      .avatar-box { display: none; }
+      .header-text h1 { font-size: 1.8rem; }
+      .pub { grid-template-columns: 1fr; }
+      .pub-year { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrapper">
+    <span class="nav-name">Raphaël Rème</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#publications">Publications</a>
+      <a href="#thesis">Thesis</a>
+      <a href="#projects">Projects</a>
+      <a href="#cv">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER / ABOUT -->
+<header id="about">
+  <div class="wrapper">
+    <div class="header-text">
+      <h1>Raphaël Rème</h1>
+      <p class="subtitle">Postdoctoral Researcher &nbsp;·&nbsp; Institut Pasteur, Paris &nbsp;·&nbsp; Biological Analysis Unit</p>
+      <p class="bio">
+        I work on multiple object tracking (MOT) in biological microscopy images — in particular fluorescence imaging of neurons in small model organisms such as <em>Hydra vulgaris</em>.
+        My research combines Bayesian filtering, optical flow, and self-supervised visual learning to build robust, accurate tracking pipelines for dense biological scenes.
+      </p>
+      <div class="header-links">
+        <a class="pill pill-scholar" href="https://scholar.google.com/citations?user=W5NIAnoAAAAJ" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+          Google Scholar
+        </a>
+        <a class="pill pill-github" href="https://github.com/raphaelreme" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
+        <a class="pill pill-linkedin" href="https://www.linkedin.com/in/raphaelreme" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a class="pill pill-email" href="mailto:raphael.reme@pasteur.fr">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.891.726-1.636 1.636-1.636h.749l9.614 7.21 9.614-7.21h.75A1.636 1.636 0 0 1 24 5.457z"/></svg>
+          Email
+        </a>
+        <a class="pill pill-cv" href="pdfs/Raphael_Reme_CV.pdf" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+          My Resume
+        </a>
+      </div>
+    </div>
+    <div class="avatar-box"><img src="ME.JPG" alt="Raphaël Rème" /></div>
+  </div>
+</header>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="wrapper">
+    <span class="section-label">Publications</span>
+
+    <!-- Journal -->
+    <div class="pub-group">
+      <div class="pub-group-title">Journal articles</div>
+
+      <div class="pub">
+        <div>
+          <div class="pub-title">Automatic Monitoring of Neural Activity with Single-Cell Resolution in Behaving Hydra</div>
+          <div class="pub-authors">Alison Hanson*, <em>Raphael Reme*</em>, Noah Telerman*, Wataru Yamamoto, Jean-Christophe Olivo-Marin, Thibault Lagache, Rafael Yuste</div>
+          <div class="pub-venue">Scientific Reports, 2024</div>
+          <div class="pub-badges">
+            <a class="badge badge-pdf" href="pdfs/scientific_reports2024.pdf" target="_blank">PDF</a>
+            <a class="badge badge-doi" href="https://doi.org/10.1038/s41598-024-55608-2" target="_blank">DOI</a>
+            <a class="badge badge-code" href="https://github.com/raphaelreme/trase-in" target="_blank">Code</a>
+          </div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+    </div>
+
+    <!-- Conference -->
+    <div class="pub-group">
+      <div class="pub-group-title">Conference papers</div>
+
+      <div class="pub">
+        <div>
+          <div class="pub-title">SINETRA: A Versatile Framework for Evaluating Single Neuron Tracking in Behaving Animals</div>
+          <div class="pub-authors"><em>Raphael Reme*</em>, Alasdair Newson, Elsa Angelini, Jean-Christophe Olivo-Marin, Thibault Lagache</div>
+          <div class="pub-venue">IEEE 22nd International Symposium on Biomedical Imaging (ISBI), 2025</div>
+          <div class="pub-badges">
+            <a class="badge badge-pdf" href="pdfs/isbi2025.pdf" target="_blank">PDF</a>
+            <a class="badge badge-doi" href="https://doi.org/10.1109/ISBI60581.2025.10981111" target="_blank">DOI</a>
+            <a class="badge badge-code" href="https://github.com/raphaelreme/sinetra" target="_blank">Code</a>
+          </div>
+        </div>
+        <div class="pub-year">2025</div>
+      </div>
+
+      <div class="pub">
+        <div>
+          <div class="pub-title">Particle Tracking in Biological Images with Optical-Flow Enhanced Kalman Filtering</div>
+          <div class="pub-authors"><em>Raphael Reme*</em>, Alasdair Newson, Elsa Angelini, Jean-Christophe Olivo-Marin, Thibault Lagache</div>
+          <div class="pub-venue">IEEE International Symposium on Biomedical Imaging (ISBI), 2024</div>
+          <div class="pub-badges">
+            <a class="badge badge-pdf" href="pdfs/isbi2024.pdf" target="_blank">PDF</a>
+            <a class="badge badge-doi" href="https://doi.org/10.1109/ISBI56570.2024.10635656" target="_blank">DOI</a>
+            <a class="badge badge-code" href="https://github.com/raphaelreme/koft" target="_blank">Code</a>
+          </div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+
+      <div class="pub">
+        <div>
+          <div class="pub-title">Tracking Intermittent Particles with Self-Learned Visual Features</div>
+          <div class="pub-authors"><em>Raphael Reme*</em>, Victor Piriou, Alison Hanson, Rafael Yuste, Alasdair Newson, Elsa Angelini, Jean-Christophe Olivo-Marin, Thibault Lagache</div>
+          <div class="pub-venue">IEEE 20th International Symposium on Biomedical Imaging (ISBI), 2023</div>
+          <div class="pub-badges">
+            <a class="badge badge-pdf" href="pdfs/isbi2023.pdf" target="_blank">PDF</a>
+            <a class="badge badge-doi" href="https://doi.org/10.1109/ISBI53787.2023.10230664" target="_blank">DOI</a>
+          </div>
+        </div>
+        <div class="pub-year">2023</div>
+      </div>
+    </div>
+
+    <!-- Submitted / In preparation -->
+    <div class="pub-group">
+      <div class="pub-group-title">To be published</div>
+
+      <div class="pub">
+        <div>
+          <div class="pub-title">Integrating Visual Features in Multiple Hypothesis Tracking through Self-Supervised Learning</div>
+          <div class="pub-authors"><em>Raphael Reme*</em>, Alasdair Newson, Elsa Angelini, Jean-Christophe Olivo-Marin, Thibault Lagache</div>
+          <div class="pub-venue">Accepted — IEEE International Symposium on Biomedical Imaging (ISBI) 2026</div>
+          <div class="pub-badges">
+            <a class="badge badge-pdf" href="pdfs/isbi2026.pdf" target="_blank">PDF</a>
+            <span class="badge badge-pending">To appear</span>
+            <a class="badge badge-code" href="https://github.com/bia-pasteur/visual_mht" target="_blank">Code</a>
+          </div>
+        </div>
+        <div class="pub-year">2026</div>
+      </div>
+
+      <!-- <div class="pub">
+        <div>
+          <div class="pub-title">An Arbitrarily High Order Total Generalized Variation Deblurring Algorithm against Optical Aberrations in Microscopy Imaging</div>
+          <div class="pub-authors">Yekta Kesenci*, <em>Raphael Reme*</em>, Alasdair Newson, Thibault Lagache, Loic Le Folgoc, Elsa Angelini, Jean-Christophe Olivo-Marin</div>
+          <div class="pub-venue">Submitted — IEEE International Conference on Image Processing (ICIP) 2026</div>
+          <div class="pub-badges">
+            <span class="badge badge-pending">Under review</span>
+          </div>
+        </div>
+        <div class="pub-year">2026</div>
+      </div> -->
+
+      <!-- <div class="pub">
+        <div>
+          <div class="pub-title">Using Optical Flow as a Velocity Sensor for Kalman-Based Tracking of Biological Objects</div>
+          <div class="pub-authors"><em>Raphael Reme*</em>, Alasdair Newson, Elsa Angelini, Jean-Christophe Olivo-Marin, Thibault Lagache</div>
+          <div class="pub-venue">Submitted — IEEE Transactions on Image Processing</div>
+          <div class="pub-badges">
+            <a class="badge badge-pdf" href="pdfs/koft_journal2025.pdf">PDF</a>
+            <span class="badge badge-pending">Under review</span>
+          </div>
+        </div>
+        <div class="pub-year">2025</div>
+      </div>
+    </div> -->
+
+    <p style="font-family: var(--font-mono); font-size: 12px; color: var(--muted);">* Equal contribution.</p>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section id="thesis">
+  <div class="wrapper">
+    <span class="section-label">PhD Thesis</span>
+    <div class="thesis-card">
+      <h3>Integrating Optical Flow within a Bayesian Framework for Multiple Object Tracking in Biological Imaging. Application to Neuron Tracking in <em>Hydra</em>.</h3>
+      <div class="thesis-meta">Institut Pasteur &amp; Télécom Paris &nbsp;·&nbsp; 2022–2025 &nbsp;·&nbsp; Supervisors: T. Lagache, J.-C. Olivo-Marin, A. Newson, E. Angelini</div>
+      <p class="thesis-abstract">
+        Understanding neuronal activity in behaving animals requires accurate tracking of large neuronal populations over time.
+        In small model organisms such as <em>Hydra vulgaris</em>, calcium imaging enables the monitoring of hundreds of neurons simultaneously, but reliable tracking remains a major challenge due to strong body deformations, dense neuronal populations, and the intermittent detectability of neurons.
+        This thesis develops three complementary contributions:
+        (1) <strong>SINETRA</strong>, a versatile simulator generating annotated 2D/3D fluorescence videos for benchmarking neuron tracking algorithms;
+        (2) <strong>KOFT / KOFT-MHT</strong>, Kalman-based trackers augmented with optical flow as a second sensor, embedded in a full Bayesian Multiple Hypothesis Tracking framework;
+        (3) <strong>VEMC²</strong>, a tracklet stitching method combining self-supervised visual features with positional cues to reconnect fragmented trajectories.
+        The methods achieve substantial improvements in tracking accuracy, including a first-place ranking on the Cell Tracking Challenge Cell Linking Benchmark.
+      </p>
+      <div class="thesis-keywords">
+        <strong>Keywords:</strong> <span>Multiple Object Tracking · Bayesian models · Optical flow · Self-supervised learning · Fluorescence imaging · Calcium imaging · <em>Hydra vulgaris</em></span>
+      </div>
+      <a class="badge badge-pdf" href="pdfs/thesis.pdf" target="_blank" style="font-size: 13px; padding: 5px 14px;">Download thesis PDF</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrapper">
+    <span class="section-label">Open-source projects</span>
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <h3><a href="https://github.com/raphaelreme/byotrack" target="_blank">ByoTrack</a></h3>
+        <p class="proj-desc">Python library for biological object tracking. Implements classic and state-of-the-art detection, segmentation and tracking methods.</p>
+        <span class="proj-highlight">🏆 1st — CTC Cell Linking Benchmark</span>
+      </div>
+
+      <div class="proj-card">
+        <h3><a href="https://github.com/raphaelreme/torch-kf" target="_blank">Torch-KF</a></h3>
+        <p class="proj-desc">PyTorch implementation of Kalman filters with batch processing, CPU/GPU parallelisation, and support for smoothing.</p>
+      </div>
+
+      <div class="proj-card">
+        <h3><a href="https://github.com/raphaelreme/pylapy" target="_blank">Pylapy</a></h3>
+        <p class="proj-desc">Fast and Pythonic linear assignment problem solver.</p>
+      </div>
+
+      <div class="proj-card">
+        <h3><a href="https://github.com/raphaelreme/tps" target="_blank">Tps / Torch-Tps</a></h3>
+        <p class="proj-desc">Fast Thin Plate Spline implementation based on NumPy or PyTorch. Scikit-Learn-like API with CPU/GPU support.</p>
+      </div>
+
+      <div class="proj-card">
+        <h3><a href="https://github.com/raphaelreme/expyrun" target="_blank">Expyrun</a></h3>
+        <p class="proj-desc">Offline management of reproducible research experiments from YAML configuration files, with isolated source and dependencies.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="wrapper">
+    <span class="section-label">Education</span>
+
+    <div>
+      <div class="cv-row">
+        <div>
+          <div class="cv-title">PhD, Computer Vision &amp; Tracking</div>
+          <div class="cv-inst">Institut Pasteur / Télécom Paris, Paris</div>
+          <div class="cv-summary">Biological object tracking. Application to <em>Hydra vulgaris</em> neurons.</div>
+        </div>
+        <div class="cv-date">2022 – 2025</div>
+      </div>
+      <div class="cv-row">
+        <div>
+          <div class="cv-title">MSc, Mathematics, Vision, Learning (MVA)</div>
+          <div class="cv-inst">Institut Polytechnique de Paris</div>
+          <div class="cv-summary">Graduated with Highest Honors.</div>
+        </div>
+        <div class="cv-date">2020 – 2021</div>
+      </div>
+      <div class="cv-row">
+        <div>
+          <div class="cv-title">MSc Engineering (Embedded Systems &amp; Data Science)</div>
+          <div class="cv-inst">Télécom Paris</div>
+        </div>
+        <div class="cv-date">2017 – 2021</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrapper">
+    <span class="section-label">Contact</span>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div class="contact-val"><a href="mailto:raphael.reme@pasteur.fr">raphael.reme@pasteur.fr</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Address</div>
+        <div class="contact-val" style="font-size: 14px; color: var(--muted);">Institut Pasteur, 25 rue du Docteur Roux<br>75015 Paris, France</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">GitHub</div>
+        <div class="contact-val"><a href="https://github.com/raphaelreme" target="_blank">github.com/raphaelreme</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-val"><a href="https://www.linkedin.com/in/raphaelreme" target="_blank">linkedin.com/in/raphaelreme</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrapper">Raphaël Rème &nbsp;·&nbsp; Institut Pasteur &nbsp;·&nbsp; Updated 2025</div>
+</footer>
+
+</body>
+</html>
